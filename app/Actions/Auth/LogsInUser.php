@@ -27,7 +27,9 @@ class LogsInUser implements ILogsInUser
             ]);
         }
 
-        $tokenString = $user->createToken('Authorization')->plainTextToken;
+        $scopeString = $user->role == 1 ? 'role:photographer' : 'role:productowner';
+
+        $tokenString = $user->createToken('Authorization', [$scopeString])->plainTextToken;
 
         return ['token'=>$tokenString, 'user'=>$user];
     }

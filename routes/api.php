@@ -21,12 +21,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix'=> 'photoshoots/v1'], function(){
+Route::group(['prefix'=> 'photoshoots/v1'], function () {
 
     Route::post('/register', [AuthRegisterController::class, 'register'])->name('api.v1.register');
     Route::post('/login', [AuthLoginController::class, 'login'])->name('api.v1.login');
 
-    Route::group(['middleware'=> 'auth:sanctum'], function(){
+    Route::group(['middleware'=> 'auth:sanctum'], function () {
         Route::post('/logout', [AuthLoginController::class, 'logout'])->name('api.v1.logout');
+
+        Route::group(['prefix'=>'photographer', 'middleware'=>'photographer'], function () {
+            
+        });
+
+        Route::group(['prefix'=>'productowner', 'middleware'=>'productowner'], function () {
+            
+        });
     });
 });
