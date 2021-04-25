@@ -44,4 +44,34 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    
+    /**
+     * The created user has a role of photographer
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function photographer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role'=> 1
+            ];
+        });
+    }
+
+    
+    /**
+     * The created user has a role of product owner
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function productOwner()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role'=> 2
+            ];
+        });
+    }
 }

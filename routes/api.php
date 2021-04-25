@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthLoginController;
+use App\Http\Controllers\API\AuthRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::group(['prefix'=> 'photoshoots/v1'], function(){
+
+    Route::post('/register', [AuthRegisterController::class, 'register'])->name('api.v1.register');
+    Route::post('/login', [AuthLoginController::class, 'login'])->name('api.v1.login');
+
+    Route::group(['middleware'=> 'auth:sanctum'], function(){
+        Route::post('/logout', [AuthLoginController::class, 'logout'])->name('api.v1.logout');
+    });
 });
