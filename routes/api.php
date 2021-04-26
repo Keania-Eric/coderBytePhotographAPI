@@ -4,7 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthLoginController;
 use App\Http\Controllers\API\AuthRegisterController;
-
+use App\Http\Controllers\ProductOwner\PhotoshootRequestController as ProductOwnerPhotoshootRequestController;
+use App\Http\Controllers\Photogeapher\PhotoshootRequestController as PhotographerPhotoshootRequestController;
+use App\Http\Controllers\ProductOwner\PhotoshootController as ProductOwnerPhotoshootController;
+use App\Http\Controllers\Photogeapher\PhotoshootController as PhotographerPhotoshootController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,13 +30,30 @@ Route::group(['prefix'=> 'photoshoots/v1'], function () {
     Route::post('/login', [AuthLoginController::class, 'login'])->name('api.v1.login');
 
     Route::group(['middleware'=> 'auth:sanctum'], function () {
+        
         Route::post('/logout', [AuthLoginController::class, 'logout'])->name('api.v1.logout');
 
         Route::group(['prefix'=>'photographer', 'middleware'=>'photographer'], function () {
-            
+            Route::group(['prefix'=>'photoshootrequest'], function (){
+                Route::get('/available', [PhotographerPhotoshootRequestController::class, 'available'])
+                ->name('api.v1.available-shoots');
+            });
+
+            Route::group(['prefix'=>'photoshoot'], function (){
+                Route::post('/upload', [PhotographerPhotoshootController::class, 'upload'])->name('api.v1.photoshoot-upload');
+            });
         });
 
         Route::group(['prefix'=>'productowner', 'middleware'=>'productowner'], function () {
+
+            Route::group(['prefix'=>'photoshootrequest'], function (){
+                Route::post('/store', [ProductOwnerPhotoshootRequestController::class, 'store'])
+                ->name('api.v1.request-photoshoot');
+            });
+
+            Route::group(['prefix'=>'photoshoot'], function (){
+                Route::post('/approve', [ProductOwnerPhotoshootController::class, 'aprove'])->name('api.v1.photoshoot-approve');
+            });
             
         });
     });
