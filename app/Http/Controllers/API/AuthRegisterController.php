@@ -28,7 +28,7 @@ class AuthRegisterController extends Controller
         try {
             
             $validatedData = $request->validate([
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users',
                 'password' => 'required',
                 'name' => 'required',
                 'role'=> 'numeric'

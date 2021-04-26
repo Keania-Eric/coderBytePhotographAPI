@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthLoginController;
 use App\Http\Controllers\API\AuthRegisterController;
 use App\Http\Controllers\ProductOwner\PhotoshootRequestController as ProductOwnerPhotoshootRequestController;
-use App\Http\Controllers\Photogeapher\PhotoshootRequestController as PhotographerPhotoshootRequestController;
+use App\Http\Controllers\Photographer\PhotoshootRequestController as PhotographerPhotoshootRequestController;
 use App\Http\Controllers\ProductOwner\PhotoshootController as ProductOwnerPhotoshootController;
-use App\Http\Controllers\Photogeapher\PhotoshootController as PhotographerPhotoshootController;
+use App\Http\Controllers\Photographer\PhotoshootController as PhotographerPhotoshootController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -52,9 +52,11 @@ Route::group(['prefix'=> 'photoshoots/v1'], function () {
             });
 
             Route::group(['prefix'=>'photoshoot'], function (){
-                Route::post('/approve', [ProductOwnerPhotoshootController::class, 'aprove'])->name('api.v1.photoshoot-approve');
+                Route::post('/approve', [ProductOwnerPhotoshootController::class, 'approve'])->name('api.v1.photoshoot-approve');
+                Route::get('/view/sample', [ProductOwnerPhotoshootController::class, 'sample'])->name('api.v1.photoshoot-sample');
             });
             
         });
     });
 });
+

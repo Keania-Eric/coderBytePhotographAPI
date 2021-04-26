@@ -9,12 +9,15 @@ use App\Traits\ReferenceGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Photoshoot extends Model implements HasMedia
 {
     use HasFactory, ReferenceGenerator, InteractsWithMedia;
     
     protected $guarded = [];
+
+    protected $refPrefix = 'PS-';
 
     
     /**
@@ -60,6 +63,23 @@ class Photoshoot extends Model implements HasMedia
     public function photographer()
     {
         return $this->belongsTo(User::class, 'photographer_id');
+    }
+
+    
+    /**
+     * Registers a conversion method 
+     *
+     * @param Media $media [explicite description]
+     *
+     * @return void
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumbnails')
+              ->width(368)
+              ->height(232)
+              ->sharpen(10)
+              ->nonQueued();
     }
 
 }

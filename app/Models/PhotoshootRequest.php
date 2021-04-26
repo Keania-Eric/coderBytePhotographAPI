@@ -16,6 +16,18 @@ class PhotoshootRequest extends Model
     protected $refPrefix = 'PSR-';
     
     /**
+     * Available 
+     *
+     * @param $query $query [explicite description]
+     *
+     * @return void
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('status', 1);
+    }
+    
+    /**
      * Sets the reference prop whenever the creating event is being fired
      *
      * @return void
@@ -35,7 +47,7 @@ class PhotoshootRequest extends Model
      */
     public function photoshoots()
     {
-        return $this->belongsTo(Photoshoot::class, 'request_id');
+        return $this->hasMany(Photoshoot::class, 'request_id');
     }
 
     

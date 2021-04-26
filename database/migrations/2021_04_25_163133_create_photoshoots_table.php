@@ -19,7 +19,7 @@ class CreatePhotoshootsTable extends Migration
             $table->integer('requester_id');
             $table->integer('photographer_id');
             $table->integer('request_id');
-            $table->integer('status')->comments("1 - Pending , 2 - Accepted, 3 - Decline");
+            $table->integer('status')->default(1)->comments("1 - Pending , 2 - Accepted, 3 - Decline");
             $table->datetime('accepted_at')->nullable();
             $table->timestamps();
         });

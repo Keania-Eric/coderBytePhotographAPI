@@ -9,6 +9,10 @@ use App\Actions\Auth\RegistersUsers;
 use App\Contracts\Auth\ILogsOutUser;
 use App\Contracts\Auth\IRegistersUser;
 use Illuminate\Support\ServiceProvider;
+use App\Actions\Photoshoot\UploadsPhotoshoot;
+use App\Actions\Photoshoot\ApprovesPhotoshoot;
+use App\Contracts\Photoshoot\IUploadsPhotoshoot;
+use App\Contracts\Photoshoot\IApprovesPhotoshoot;
 use App\Actions\PhotoshootRequest\CreatesPhotoshootRequest;
 use App\Contracts\PhotoshootRequest\ICreatesPhotoshootRequest;
 
@@ -38,5 +42,7 @@ class AppServiceProvider extends ServiceProvider
 
         // 
         $this->app->bind(ICreatesPhotoshootRequest::class, CreatesPhotoshootRequest::class);
+        $this->app->bind(IUploadsPhotoshoot::class, UploadsPhotoshoot::class);
+        $this->app->bind(IApprovesPhotoshoot::class, ApprovesPhotoshoot::class);
     }
 }

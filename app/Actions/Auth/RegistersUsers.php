@@ -17,6 +17,8 @@ class RegistersUsers implements IRegistersUser
      */
     public function registerUser(array $data):array
     {
+        $data['password'] = bcrypt($data['password']);
+        
         $user = User::create($data);
 
         $tokenString = $user->createToken('Authorization')->plainTextToken;
